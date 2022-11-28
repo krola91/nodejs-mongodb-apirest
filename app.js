@@ -1,9 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const url = "mongodb+srv://krola:caca123@cluster0.wi94efx.mongodb.net/?retryWrites=true&w=majority";
+const url =
+  "mongodb+srv://krola:caca123@cluster0.wi94efx.mongodb.net/?retryWrites=true&w=majority";
 
-mongoose.connect(url, { useNewUrlParser: true });
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 const con = mongoose.connection;
 con.on("open", () => {
   console.log("Database connected, crud-restapi");
