@@ -59,52 +59,52 @@ router.post("/signin", async (req, res) => {
   res.json({ auth: true, token });
 });
 
-// Validates with a url to send a email
-router.get("/:id/validate", async (req, res) => {
-  const { username, password, email, id } = req.body;
-  const user = await User.findOne({ username: username });
-  if (!user) {
-    return res.status(404).send("User does not exist");
-  }
+// // Validates with a url to send a email
+// router.get("/:id/validate", async (req, res) => {
+//   const { username, password, email, id } = req.body;
+//   const user = await User.findOne({ username: username });
+//   if (!user) {
+//     return res.status(404).send("User does not exist");
+//   }
 
-  const validPassword = await user.validatePassword(password);
-  if (!validPassword) {
-    return res.status(401).json({ auth: false, token: null });
-  }
+//   const validPassword = await user.validatePassword(password);
+//   if (!validPassword) {
+//     return res.status(401).json({ auth: false, token: null });
+//   }
 
-  const token = jwt.sign({ id: user._id }, config.secret, {
-    expiresIn: 60 * 60 * 24,
-  });
+//   const token = jwt.sign({ id: user._id }, config.secret, {
+//     expiresIn: 60 * 60 * 24,
+//   });
 
-  res.json({ auth: true, valid: true, token });
+//   res.json({ auth: true, valid: true, token });
 
-  let testAccount = await nodemailer.createTestAccount();
-  const transporter = nodemailer.createTransport({
-    host: "pop.hostinger.com",
-    port: 995,
-    secure: false,
-    auth: {
-      user: "test@ihackedgringotts.com",
-      pass: "Testprueba1@",
-    },
-    tls: {
-      rejectUnauthorized: false,
-    },
-  });
-  const info = await transporter.sendMail({
-    from: "'krolaServer' <test@ihackedgringotts.com>",
-    to: "vallejotrabajocaro@gmail.com",
-    subjet: "Prueba de envios de correo",
-    text: "http://localhost:3000/entertheid/validate",
-    html: `<h1>User information</h1>
-    <ul>
-    <li>Username: ${username}</li>
-    <li>User email: ${email}</li>
-    <li>User password: ${id}</li>
-    </ul>`,
-  });
-  console.log("Message sent: %s", info.messageId);
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-});
+//   let testAccount = await nodemailer.createTestAccount();
+//   const transporter = nodemailer.createTransport({
+//     host: "pop.hostinger.com",
+//     port: 995,
+//     secure: false,
+//     auth: {
+//       user: "test@ihackedgringotts.com",
+//       pass: "Testprueba1@",
+//     },
+//     tls: {
+//       rejectUnauthorized: false,
+//     },
+//   });
+//   const info = await transporter.sendMail({
+//     from: "'krolaServer' <test@ihackedgringotts.com>",
+//     to: "vallejotrabajocaro@gmail.com",
+//     subjet: "Prueba de envios de correo",
+//     text: "http://localhost:3000/entertheid/validate",
+//     html: `<h1>User information</h1>
+//     <ul>
+//     <li>Username: ${username}</li>
+//     <li>User email: ${email}</li>
+//     <li>User password: ${id}</li>
+//     </ul>`,
+//   });
+//   console.log("Message sent: %s", info.messageId);
+//   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+// });
 
 module.exports = router;
