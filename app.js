@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const MONGODB_URI = "mongodb://localhost:27017/crud-restapi";
+const MONGODB_URI = "mongodb://0.0.0.0:27017/crud-restapi";
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
