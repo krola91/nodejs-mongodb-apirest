@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const url = "mongodb://localhost:27017/crud-restapi";
+const url = "mongodb+srv://krola:caca123@cluster0.wi94efx.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose.connect(url, { useNewUrlParser: true });
 const con = mongoose.connection;
